@@ -34,7 +34,7 @@ import datetime
 from model.new_test_model2 import HiFuse_Tiny
 #from model.cjy_model1 import HiFuse_Tiny
 def main():
-    """超参数"""
+    """Hyperparameters"""
     # Random seed
     seed = 42
     # Batch size
@@ -113,7 +113,7 @@ def main():
     print("using {} device.".format(device))
     print(f"Pretrained is {pretrained}")
 
-    """训练预处理"""
+    """Training preprocessing"""
     data_transform = {
         "train": transforms.Compose([
             transforms.Resize((image_size, image_size)),
@@ -283,3 +283,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
