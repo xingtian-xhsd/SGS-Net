@@ -47,8 +47,8 @@ from model.main_model import HiFuse_Tiny
    **Whether to load the pretrained model** \
     pretrained = False 
 ## 3、Loading the dataset 
-    DATASETS_ROOT = "<your_datasets_path>" \
-    ROOT_TRAIN = os.path.join(DATASETS_ROOT, 'train') \
+    DATASETS_ROOT = "<your_datasets_path>" 
+    ROOT_TRAIN = os.path.join(DATASETS_ROOT, 'train') 
     ROOT_VAL = os.path.join(DATASETS_ROOT, 'val') 
 ## 4、Loading GPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
