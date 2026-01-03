@@ -21,30 +21,30 @@ I've included my main model code main_model.py, the training file train.py, and 
 from model.main_model import HiFuse_Tiny 
  model = HiFuse_Tiny(num_classes=num_classes) 
 ## 2、Set the project hyperparameters 
- Random seed \
+ **Random seed** \
     seed = 42 \
-     Batch size \
+ **Batch size** \
     batch_size = 32 \
-     Number of classes \
+ **Number of classes** \
     num_classes = 8 \
-     Learning rate \ 
+ **Learning rate** \ 
     lr = 1e-4 \
     lr = 1e-5 \
-     Saving the learning rate \
+  **Saving the learning rate** \
     lr_arr = [] \
-     Number of training \
+   **Number of training** \
     epochs = 300 \
-     Best results \ 
-    best_acc = 0.0 \
-     Discard the branching rate \
+   **Best results** \ 
+     best_acc = 0.0 \
+   **Discard the branching rate** \
     drop_path_rate = 0.2 \
-    Break point \
+   **Break point** \
     state_epoch = 0 \
-    Input image size \
+   **Input image size** \
     image_size = 224 \
-    Whether to start training from the interrupt point \
+   **Whether to start training from the interrupt point** \
     resume_training = False \
-    Whether to load the pretrained model \
+   **Whether to load the pretrained model** \
     pretrained = False 
 ## 3、Loading the dataset 
     DATASETS_ROOT = "<your_datasets_path>" \
