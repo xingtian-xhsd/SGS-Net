@@ -1,17 +1,18 @@
-# SGS-Net: A Two-stream Gated Feature Selection and Fusion Classification Network for Medical Image Analysis
+# 一、SGS-Net: A Two-stream Gated Feature Selection and Fusion Classification Network for Medical Image Analysis
 The official implement of the SGS-Net \
 ![SGS-Net](model.png)
 
-## Env
+## 二、Env
 python3.8\
 cuda 12.6
 
-## Train & Test Pipeline
+## 三、Train & Test Pipeline
 1、python train.py \
 2、python predict.py
 
 ## Experiment Detail
-1、‎dataset \
+
+## 四、‎dataset 
 The data that support the findings of this study are available from the corresponding author upon reasonable request.  \
 The dataset is also available at https://dl.acm.org/doi/pdf/10.1145/3083187.3083212. \
 https://www.kaggle.com/c/siim-isic-melanoma-classification/data. \
