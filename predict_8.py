@@ -110,11 +110,11 @@ for i in range(num_classes):
     fpr[i], tpr[i], _ = roc_curve(true_labels_bin[:, i], probs[:, i])
     roc_auc[i] = auc(fpr[i], tpr[i])
 
-# 计算微观AUC
+# Calculating microscopic AUC
 fpr_micro, tpr_micro, _ = roc_curve(true_labels_bin.ravel(), probs.ravel())
 micro_auc = auc(fpr_micro, tpr_micro)
 
-# 自定义标签
+# Custom tags
 labels = {
     0: 'dyed_lifted_polyps',
     1: 'dyed_resection_margins',
@@ -158,7 +158,7 @@ print(f"Recall: {recall}")
 print(f"f1_score: {f1}")
 print(f"MCC: {mcc}")
 print(f"Kappa: {kappa}")
-# 输出AUC
+# Output AUC
 print(f"Micro AUC: {micro_auc:.4f}")
 
 # Plot confusion matrix

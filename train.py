@@ -35,65 +35,65 @@ from model.new_test_model2 import HiFuse_Tiny
 #from model.cjy_model1 import HiFuse_Tiny
 def main():
     """超参数"""
-    # 随机种子
+    # Random seed
     seed = 42
-    # 批处理大小
+    # Batch size
     batch_size = 32
-    # 分类数量
+    # Number of classes
     num_classes = 8
-    # 学习率
+    # Learning rate
     lr = 1e-4
     # lr = 1e-5
-    # 保存学习率
+    # Saving the learning rate
     lr_arr = []
-    # 训练次数
+    # Number of training
     epochs = 300
-    # 最佳结果
+    # Best results
     best_acc = 0.0
-    # 舍弃分支率
+    # Discard the branching rate
     drop_path_rate = 0.2
-    # 中断点
+    # Break point
     state_epoch = 0
-    # 输入图片大小
+    # Input image size
     image_size = 224
-    # 是否从中断点开始训练
+    # Whether to start training from the interrupt point
     resume_training = False
-    # 是否加载预训练模型
+    # Whether to load the pretrained model
     pretrained = False
 
-    # checkpoint 存放的文件夹
+    # Folder where checkpoint is stored
     checkpoint_dir = 'checkpoint'
     if not os.path.exists(checkpoint_dir):
         os.makedirs(checkpoint_dir)
 
-    # log 存放的文件夹
+    # log directory
     log_dir = 'logs'
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
 
-    # accuracy,loss 存放的文件夹
+    # accuracy,loss The folder in which it is stored
     acc_loss_dir = 'acc_loss'
     if not os.path.exists(acc_loss_dir):
         os.makedirs(acc_loss_dir)
 
-    # 数据集路径
+    # Dataset path
     DATASETS_ROOT = r"F:\code\Dataset\Multi-class texture analysis in colorectal cancer histology"
     #kvasir_dataset   Multi-class texture analysis in colorectal cancer histology ISIC2018  F:\code\Dataset\ISIC2018-tiny
     ROOT_TRAIN = os.path.join(DATASETS_ROOT, 'train')
     ROOT_VAL = os.path.join(DATASETS_ROOT, 'val')
 
-    # 输出当前数据集路径与名称
+    # Output the current dataset path and name
     print(DATASETS_ROOT)
 
-    # 加载模型
+    # Loading the model
     model = HiFuse_Tiny(num_classes=num_classes)
 
-    # 加载GPU
+    # Loading GPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    # 保存当前模型名称
+    # Save the current model name
     model_name = model.__class__.__name__
 
-    # 配置日志记录
+    # Configuring Logging
     current_time = datetime.datetime.now()
     formatted_time = current_time.strftime("%Y_%m_%d_%H_%M_%S")
     if pretrained:
@@ -101,12 +101,12 @@ def main():
     log_file = os.path.join(log_dir, f'{model_name}_{formatted_time}_log.txt')
     logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(message)s')
 
-    # 创建当前模型acc与loss保存文件夹
+    # Create acc and loss folders for the current model
     model_acc_loss_dir = f'{acc_loss_dir}/{model_name}_{formatted_time}'
     if not os.path.exists(model_acc_loss_dir):
         os.makedirs(model_acc_loss_dir)
 
-    # 设置随机种子
+    # Setting a random seed
     seed_everything(seed)
 
     print(f"Current model: {model_name}")
@@ -117,7 +117,7 @@ def main():
     data_transform = {
         "train": transforms.Compose([
             transforms.Resize((image_size, image_size)),
-            # 在线数据增强
+            # Online Data augmentation
             transforms.RandomResizedCrop(image_size),
             transforms.RandomHorizontalFlip(),
             transforms.RandomRotation(45),
@@ -144,7 +144,7 @@ def main():
     nw = min([os.cpu_count(), batch_size if batch_size > 1 else 0, 8])  # number of workers
     print('Using {} dataloader workers every process'.format(nw))
 
-    # 创建 DataLoader 时传入 WeightedRandomSampler
+    # When you create a DataLoader, you pass WeightedRandomSampler
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
                                                worker_init_fn=partial(worker_init_fn, rank=0, seed=seed))
 
@@ -165,10 +165,10 @@ def main():
 
     # construct an optimizer
     params = [p for p in model.parameters() if p.requires_grad]
-    #正则化
+    #regularization
     optimizer = torch.optim.AdamW(params, lr=lr, weight_decay=5e-2)
 
-    # 训练策略
+    # Training strategy
     # scheduler = CosineLRScheduler(optimizer=optimizer,
     #                               t_initial=epochs,
     #                               lr_min=5e-6,
@@ -183,7 +183,7 @@ def main():
         optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         state_epoch = checkpoint['epoch']
 
-    """训练"""
+    """Training"""
     train_losses = []
     train_accuracies = []
     val_accuracies = []
@@ -218,7 +218,7 @@ def main():
             train_bar.desc = "state_epoch:{} train epoch[{}/{}] loss:{:.5f} lr:{:.6f}".format(
                 state_epoch + 1, epoch + 1, epochs, loss, optimizer.param_groups[0]['lr'])
 
-            # 记录训练日志
+            # Keeping a training log
             logging.info("state_epoch:{} train epoch[{}/{}] loss:{:.5f} lr:{:.6f}".format(
                 state_epoch + 1, epoch + 1, epochs, loss, optimizer.param_groups[0]['lr']))
 
@@ -251,7 +251,7 @@ def main():
 
         if val_accurate > best_acc:
             best_acc = val_accurate
-            # 保存训练参数
+            # Saving training parameters
             torch.save({
                 'epoch': epoch,
                 'model_state_dict': model.state_dict(),
@@ -264,14 +264,14 @@ def main():
     torch.save(val_accuracies, f'{model_acc_loss_dir}/{model_name}_val_accuracies.txt')
 
     print('Finished Training')
-    print('训练精确度', train_accurate)
-    print('最好的验证精确度', best_acc)
+    print('Training accuracy', train_accurate)
+    print('Best validation accuracy', best_acc)
     plt.plot(np.arange(epochs), lr_arr)
     plt.show()
 
-    # 绘制损失曲线
+    # Plotting the loss
 
-    # 绘制精度曲线
+    # Plotting accuracy curves
     plt.plot(train_losses, label='Training Loss')
     plt.plot(train_accuracies, label='Training Accuracy')
     plt.plot(val_accuracies, label='Validation Accuracy')
