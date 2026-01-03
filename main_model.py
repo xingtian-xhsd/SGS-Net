@@ -250,7 +250,7 @@ class LayerNorm(nn.Module):
 
 
 class Local_block(nn.Module):
-    # 该部分替换成了starnet的block，后续加入一个局部注意力即可
+    # This part is the local feature extraction module
     r""" Local Feature Block. There are two equivalent implementations:
     (1) DwConv -> LayerNorm (channels_first) -> 1x1 Conv -> GELU -> 1x1 Conv; all in (N, C, H, W)
     (2) DwConv -> Permute to (N, H, W, C); LayerNorm (channels_last) -> Linear -> GELU -> Linear; Permute back
@@ -875,7 +875,7 @@ if __name__ == "__main__":
     model = HiFuse_Tiny(num_classes=8)
     out = model(x)
     print(out.shape)
-    # 计算模型的总参数数
+    # Calculate the total number of parameters of the model
     total_params = sum(p.numel() for p in model.parameters())
     total_params_millions = total_params / 1_000_000
     print(f"Params: {total_params_millions:.2f}M")
