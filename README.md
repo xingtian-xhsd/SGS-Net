@@ -27,14 +27,14 @@ from model.main_model import HiFuse_Tiny
     batch_size = 32 \
  **Number of classes** \
     num_classes = 8 \
- **Learning rate** \ 
+ **Learning rate** \
     lr = 1e-4 \
     lr = 1e-5 \
   **Saving the learning rate** \
     lr_arr = [] \
    **Number of training** \
     epochs = 300 \
-   **Best results** \ 
+   **Best results** \
      best_acc = 0.0 \
    **Discard the branching rate** \
     drop_path_rate = 0.2 \
