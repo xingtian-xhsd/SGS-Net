@@ -4,9 +4,9 @@ The official implement of the SGS-Net \
 
 # 二、‎dataset 
 The data that support the findings of this study are available from the corresponding author upon reasonable request.  \
-The dataset is also available at https://dl.acm.org/doi/pdf/10.1145/3083187.3083212. \
+The dataset is also available at https://datasets.simula.no/kvasir. \
 https://www.kaggle.com/c/siim-isic-melanoma-classification/data. \
-https://www.nature.com/articles/srep27988. 
+https://10.0.20.161/zenodo.53169.
 
 # 三、Dataset Information 
 **Kvasir:** The Kvasir dataset is a publicly available dataset comprising 4000 endoscopic images of gastrointestinal diseases. These images are categorized into 8 classes, with each class containing 500 images. The dataset encompasses a diverse range of images within each category, featuring anatomical landmarks such as the Z-line, pylorus, and caecum, as well as pathological findings including esophagitis, polyps, and ulcerative colitis. The original images in the dataset have a resolution of 720 × 576 pixels, but all images have been resized to 224 × 224 pixels for computational efficiency. For our experiments, the dataset was partitioned into training, validation, and test sets in the ratio of 7:1.5:1.5. \
